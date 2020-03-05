@@ -4,7 +4,7 @@
 角色权限代码在LoginServiceImpl中设置为死数据
 
 |用户|角色|权限|
----------------
+|-----|-----|-----|
 |qingyang | admin| add,query|
 |zhangsan|user|query|
 
