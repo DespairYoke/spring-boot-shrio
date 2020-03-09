@@ -1,12 +1,14 @@
 package com.example.shrio.springbootshrio.controller;
 
 import com.example.shrio.springbootshrio.entity.User;
+import com.example.shrio.springbootshrio.shrio.CustomRealm;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.AuthorizationException;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresRoles;
+import org.apache.shiro.mgt.RealmSecurityManager;
 import org.apache.shiro.subject.Subject;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,6 +37,16 @@ public class LoginController {
             return "没有权限";
         }
         return "login success";
+    }
+
+    @RequestMapping("/clear")
+    public String clear() {
+        RealmSecurityManager rsm = (RealmSecurityManager)SecurityUtils.getSecurityManager();
+        CustomRealm realm = (CustomRealm)rsm.getRealms().iterator().next();
+        realm.clearAllCachedAuthenticationInfo();
+        realm.clearAllCachedAuthorizationInfo();
+        System.out.println("清除成功");
+        return "清除成功";
     }
 
     @RequestMapping("/index")
